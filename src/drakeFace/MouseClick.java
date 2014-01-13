@@ -42,7 +42,7 @@ public class MouseClick implements MouseListener{
 	public void mouseReleased(MouseEvent arg0) {
 		//make a call to the ball class
 		// can call get x and y
-		newFace.mouseReleased(MouseEvent arg0); 
+		newFace.mouseReleased(arg0); 
 		board.addBallToArray(newFace);
 	}
 

@@ -21,7 +21,10 @@ public class Board extends JPanel{
 	
 	public void move() {
 		for (int i = 0; i< ballArray.size(); i++) {
-			ballArray.get(i).moveBall(xspeed, yspeed); 
+			ballArray.get(i).moveBall(); 
+			if (ballArray.get(i).timeLeft()<=0) {
+				ballArray.remove(i); 
+			}
 		}
 	}
 	

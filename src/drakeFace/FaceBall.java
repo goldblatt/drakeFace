@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 public class FaceBall { 
 	int width = 30; 
 	int height = 30; 
+	int mass = 20; 
 	BufferedImage image; 
 	private Board gameBoard; 
 
@@ -28,15 +29,20 @@ public class FaceBall {
 	
 	//use this to e
 	int transperency; 
-	int timeLeft; 
+	int timeLeft = 1000; 
 	
+	int xspeed = 1; 
+	int yspeed = 1; 
+	
+	public int timeLeft() {
+		return timeLeft--; 
+	}
 	
 	public FaceBall(Board board, String filename, int xp, int yp) {
-		xpos = xp; 
-		ypos = yp; 
+		initx = xp; 
+		inity = yp; 
 		gameBoard = board; 
 		transperency = 100; 
-		timeLeft = 100; 
 		
 		try {
 			image = ImageIO.read(new File(filename));
@@ -45,21 +51,39 @@ public class FaceBall {
 			System.out.println("Throws an error" + e);
 		} 
 	}
-	public void moveBall(int xvelocity, int yvelocity) {
-		xpos = xpos + 1 * xvelocity; 
-		ypos = ypos + 1 * yvelocity; 
+	public void moveBall() {
+		
+		xpos = xpos - xspeed; 
+		ypos = ypos - yspeed; 
+		
+		if (xpos > gameBoard.getWidth() - 50 || xpos < 5) {
+			xspeed = xspeed * -1; 
+		}
+		if (ypos > gameBoard.getHeight() - 50 || ypos < 5) {
+			yspeed = yspeed * -1; 
+		}
+		
+
+		
 	}
 	
 	
 	public void paint(Graphics2D g) {
+		g.drawOval(xpos, ypos, width, height); 
 		g.drawImage(image, xpos, ypos, null);
 	}
 	
 	
+	
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		initx = arg0.getX(); 
-		inity = arg0.getY();
+		xpos = arg0.getX() - 30; 
+		ypos = arg0.getY() - 30;
+		
+		xspeed = (initx -xpos) / mass; 
+		yspeed = (inity - ypos) / mass; 
+		
+		
 	}
 
 	
